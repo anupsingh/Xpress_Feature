@@ -1,18 +1,18 @@
 package com.socgen.xpress.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.opencsv.CSVReader;
 import com.socgen.xpress.dao.ClientDao;
 import com.socgen.xpress.domain.Client;
+import com.socgen.xpress.dto.ClientDto;
 import com.socgen.xpress.transformer.ClientTransformer;
 
 @Service
@@ -26,23 +26,30 @@ public class ClientServiceImpl implements ClientService {
 	@Autowired
 	private ClientTransformer transformer;
 
+
 	@Override
 	public ResponseMetadata save(MultipartFile file) {
 
-		BufferedReader br;
 		List<Client> clients = new ArrayList<>();
-		try {
-
-			String line;
-			InputStream is = file.getInputStream();
-			br = new BufferedReader(new InputStreamReader(is));
-			while ((line = br.readLine()) != null) {
-				Client client = transformer.tranform(line.split(SEPRATOR));
-				clients.add(client);
+		/*
+		 * TODO- need to use the CsvToBeanBuilder with @CsvBindByName.
+		 * CsvToBean<ClientDto> csvToBean = new
+		 * CsvToBeanBuilder<ClientDto>(br).withType(ClientDto.class)
+		 * .withIgnoreLeadingWhiteSpace(true).build(); Iterator<ClientDto>
+		 * csvUserIterator = csvToBean.iterator();
+		 */
+		try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
+			List<String[]> records = csvReader.readAll();
+			for (int i = 1; i < records.size(); i++) {
+				String[] record = records.get(i);
+				ClientDto dto = transformer.tranform(record);
+				clients.add(new DozerBeanMapper().map(dto, Client.class));
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		} finally {
+
 		}
 		clientDao.save(clients);
 		ResponseMetadata metadata = new ResponseMetadata();
