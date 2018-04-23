@@ -7,37 +7,64 @@
 <body ng-controller="docController">
 	<div class="container">
 		<div class="col-md-6">
-		<div class="row">
-            <h2>Upload Document</h2>
-            <table class="table table-bordered">
-                <tr>
-                    <td><input type="file" class="custom-file-input" file-model="file"></td>
+			<div class="row">
+				<h2>Upload Document</h2>
+				<table class="table table-bordered">
+					<tr>
+						<td><input type="file" class="custom-file-input"
+							file-model="file"></td>
 
-                </tr>
-                <tr>
-                    <td><button ng-click="upload()">Upload</button></td>
-                </tr>
-            </table>
-        </div>
-            <div class="row">
-		        <table class="table table-bordered">
-			<thead>
-    			<tr>
-    				<th>File Name</th>
-    				<th>Action</th>
-    			</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="doc in docList">
-					<td><a href="/doc/{{doc.id}}">{{doc.docName}}</a></td>
-					<td><a href="/doc/{{doc.id}}" target="_blank">Download</a></td>
-				</tr>
-			</tbody>		
-		</table>
+					</tr>
+					<tr>
+						<td><button ng-click="upload()">Upload</button></td>
+					</tr>
+				</table>
+			</div>
+
+
+			<div class="row">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Tiagran Name</th>
+							<th>Config Name</th>
+							<th>Client Name</th>
+							<th>Ecid</th>
+							<th>Billing currency</th>
+							<th>Cost Center</th>
+							<th>Account Number</th>
+							<th>Sales Desk</th>
+							<th>Executive Name</th>
+							<th>Email Id</th>
+							<th>Booking Entity</th>
+							<th>Original Entity</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="client in clientList">
+							<td><a href="/client/{{client.id}}">{{client.tiagramName}}</a></td>
+							<td><a href="/client/{{client.configName}}">{{client.configName}}</a></td>
+							<td><a href="/client/{{client.clientName}}">{{client.clientName}}</a></td>
+							<td><a href="/client/{{client.ecid}}">{{client.ecid}}</a></td>
+							<td><a href="/client/{{client.billingCurrency}}">{{client.billingCurrency}}</a></td>
+							<td><a href="/client/{{client.costCenter}}">{{client.costCenter}}</a></td>
+							<td><a href="/client/{{client.accountNumber}}">{{client.accountNumber}}</a></td>
+							<td><a href="/client/{{client.salesDesk}}">{{client.salesDesk}}</a></td>
+							<td><a href="/client/{{client.executiveName}}">{{client.executiveName}}</a></td>
+							<td><a href="/client/{{client.billingRegion}}">{{client.billingRegion}}</a></td>
+							<td><a href="/client/{{client.emailId}}">{{client.emailId}}</a></td>
+							<td><a href="/client/{{client.bookingEntity}}">{{client.bookingEntity}}</a></td>
+							<td><a href="/client/{{client.accountType}}">{{client.accountType}}</a></td>
+							<td><a href="/client/{{client.originalEntity}}">{{client.originalEntity}}</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
 		</div>
 	</div>
-    </div>
-    <script src="lib/plugin/jquery-2.2.1.min.js"></script>
+	<script src="lib/plugin/jquery-2.2.1.min.js"></script>
 	<script src="lib/plugin/bootstrap.min.js"></script>
 	<script src="lib/plugin/angular.min.js"></script>
 	<script src="documentService.js"></script>
