@@ -18,8 +18,6 @@ import com.socgen.xpress.transformer.ClientTransformer;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-	private static final String SEPRATOR = ",";
-
 	@Autowired
 	private ClientDao clientDao;
 
@@ -32,7 +30,7 @@ public class ClientServiceImpl implements ClientService {
 
 		List<Client> clients = new ArrayList<>();
 		/*
-		 * TODO- need to use the CsvToBeanBuilder with @CsvBindByName.
+		 * TODO- need to use the CsvToBeanBuilder with @CsvBindByName.we can remove the transformer code. it will take care.
 		 * CsvToBean<ClientDto> csvToBean = new
 		 * CsvToBeanBuilder<ClientDto>(br).withType(ClientDto.class)
 		 * .withIgnoreLeadingWhiteSpace(true).build(); Iterator<ClientDto>
@@ -48,9 +46,7 @@ public class ClientServiceImpl implements ClientService {
 
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-		} finally {
-
-		}
+		} 
 		clientDao.save(clients);
 		ResponseMetadata metadata = new ResponseMetadata();
 		metadata.setMessage("success");
